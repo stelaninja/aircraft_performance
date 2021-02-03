@@ -1,0 +1,107 @@
+
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+    <h1 align="center">Aircraft</h1>
+    <ul class="list-group list-group-flush" id="aircrafts">
+      <li class="list-group-item">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1">
+                  ID
+                </div>
+                <div class="col-sm-2">
+                  REG
+                </div>
+                <div class="col-sm-2">
+                  TYPE
+                </div>
+                <div class="col-sm">
+                  NOTES
+                </div>
+            </div>
+        </div>
+        </li>
+      {% for aircraft in user.aircrafts %}
+      <li class="list-group-item">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-1">
+                    {{ aircraft.id }}
+                </div>
+                <div class="col-sm-2">
+                  {{ aircraft.registration }}
+                </div>
+                <div class="col-sm-2">
+                  {{ aircraft.aircraft_type }}
+                </div>
+                <div class="col-sm">
+                    {{ aircraft.data }}
+                </div>
+                <div class="col-sm" align="right">
+                    <form method="POST" action="edit-aircraft">
+                      <input type="hidden" id="ac_id" name="ac_id" value="{{ aircraft.id }}"/>
+                      <button type="submit" action="edit-aircraft" class="btn btn-warning" aria-label="Edit">
+                        Edit
+                      </button>
+                    
+                    <button type="button" class="btn btn-danger" aria-label="Delete" onClick="deleteAircraft({{ aircraft.id }})">
+                      Delete
+                    </button>
+                  </form>
+                </div>
+            </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <br />
+    <form method="POST">
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" name="ac_reg" id="ac_reg" class="form-control" placeholder="Registration" required>
+            <label for="ac_reg">Registration</label>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-floating">
+            <input name="ac_type" id="ac_type" class="form-control" placeholder="Aircraft Type">
+            <label for="ac_type" class="form-label">Aircraft Type</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" name="empty_weight" id="empty_weight" class="form-control" placeholder="Empty Weight" required>
+            <label for="empty_weight">Empty Weight</label>
+           </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" name="mtow" id="mtow" class="form-control" placeholder="Maximum Take Off Weight" required>
+            <label for="mtow" class="form-label">MTOW</label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-floating">
+            <input type="text" name="true_airspeed" id="true_airspeed" class="form-control" placeholder="True Airspeed">
+            <label for="true_airspeed" class="form-label">True Airspeed</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-floating">
+            <textarea type="text" name="note" id="note" class="form-control" placeholder="Aircraft Notes"></textarea>
+            <label for="note">Aircraft Notes</label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div align="center">
+        <button type="submit" class="btn btn-primary">Add Aircraft</button>
+      </div>
+    </form>
+
+    {% endblock %}
