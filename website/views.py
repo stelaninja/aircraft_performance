@@ -40,7 +40,16 @@ def home():
     return render_template("home.html", user=current_user)
 
 
+@views.route("/calculate")
+def calculate():
+    ac_id = request.args.get("ac_id")
+    aircraft = Aircraft.query.filter_by(id=ac_id).first()
+
+    return render_template("calculate.html", aircraft=aircraft, user=current_user)
+
+
 @views.route("/edit-aircraft", methods=["GET", "POST"])
+@login_required
 def edit_aircraft():
     if request.method == "POST":
         ac_id = request.form.get("ac_id")
@@ -50,8 +59,8 @@ def edit_aircraft():
 
 
 @views.route("/update-aircraft", methods=["POST"])
+@login_required
 def update_aircraft():
-    print("CORRECT")
     ac_id = request.form.get("ac_id")
     ac_reg = request.form.get("ac_reg")
     ac_type = request.form.get("ac_type")

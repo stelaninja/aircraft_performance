@@ -7,6 +7,7 @@
 <h1 align="center">Edit Aircraft</h1>
 
 <form method="POST" action="update-aircraft">
+    <h6>Aircraft</h6>
     <div class="row">
       <div class="col-sm-2">
         <div class="form-floating">
@@ -21,6 +22,8 @@
         </div>
       </div>
     </div>
+    <br/>
+    <h6>Weights</h6>
     <div class="row">
       <div class="col-sm-2">
         <div class="form-floating">
@@ -34,6 +37,10 @@
           <label for="mtow" class="form-label">MTOW</label>
         </div>
       </div>
+    </div>
+    <br />
+    <h6>Speeds</h6>
+    <div class="row">
       <div class="col-sm-2">
         <div class="form-floating">
           <input type="text" name="true_airspeed" id="true_airspeed" class="form-control" placeholder="TAS" value="{{ aircraft.true_airspeed }}">
@@ -41,6 +48,8 @@
         </div>
       </div>
     </div>
+    <br />
+    <h6>Additional Data</h6>
     <div class="row">
       <div class="col-sm-8">
         <div class="form-floating">

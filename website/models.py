@@ -5,10 +5,16 @@ from . import db
 
 class Aircraft(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # aircraft
     registration = db.Column(db.String(10))
     aircraft_type = db.Column(db.String(50))
+
+    # weights
     empty_weight = db.Column(db.Float)
     mtow = db.Column(db.Float)
+    mlw = db.Column(db.Float)
+
+    # speeds
     true_airspeed = db.Column(db.Integer)
 
     data = db.Column(db.String(10000))

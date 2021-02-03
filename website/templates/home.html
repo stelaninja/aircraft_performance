@@ -1,11 +1,14 @@
 
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
     %}
-    <h1 align="center">Aircraft</h1>
+    <h1 align="left">Aircrafts</h1>
     <ul class="list-group list-group-flush" id="aircrafts">
       <li class="list-group-item">
         <div class="container">
             <div class="row">
+                <div class="col-sm-1">
+                  
+                </div>
                 <div class="col-sm-1">
                   ID
                 </div>
@@ -25,6 +28,9 @@
       <li class="list-group-item">
         <div class="container">
             <div class="row">
+                <div class="col-sm-1">
+                  <a href="calculate?ac_id={{ aircraft.id }}" class="btn btn-primary">Calculate</a>
+                </div>
                 <div class="col-sm-1">
                     {{ aircraft.id }}
                 </div>
@@ -55,7 +61,15 @@
       {% endfor %}
     </ul>
     <br />
+    <br />
+
+    <h1 align="left">Add new aircraft</h1>
+
+
+
     <form method="POST">
+      <br/>
+      <h6>Aircraft</h6>
       <div class="row">
         <div class="col-sm-2">
           <div class="form-floating">
@@ -70,6 +84,8 @@
           </div>
         </div>
       </div>
+      <br />
+      <h6>Weights</h6>
       <div class="row">
         <div class="col-sm-2">
           <div class="form-floating">
@@ -83,6 +99,10 @@
             <label for="mtow" class="form-label">MTOW</label>
           </div>
         </div>
+        </div>
+        <br />
+        <h6>Speeds</h6>
+        <div class="row">
         <div class="col-sm-2">
           <div class="form-floating">
             <input type="text" name="true_airspeed" id="true_airspeed" class="form-control" placeholder="True Airspeed">
@@ -90,6 +110,8 @@
           </div>
         </div>
       </div>
+      <br />
+      <h6>Additional Data</h6>
       <div class="row">
         <div class="col-sm-8">
           <div class="form-floating">
@@ -99,7 +121,7 @@
         </div>
       </div>
       <br />
-      <div align="center">
+      <div align="left">
         <button type="submit" class="btn btn-primary">Add Aircraft</button>
       </div>
     </form>
