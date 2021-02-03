@@ -7,5 +7,3 @@ function deleteAircraft(aircraftId) {
       window.location.href = "/";
     });
   }
-
-}

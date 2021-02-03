@@ -15,9 +15,8 @@ def home():
         ac_reg = request.form.get("ac_reg")
         ac_type = request.form.get("ac_type")
         empty_weight = request.form.get("empty_weight").replace(",", ".")
-        # empty_weight = request.form.get("empty_weight")
-        # mtow = request.form.get("mtow")
         mtow = request.form.get("mtow").replace(",", ".")
+        mlw = request.form.get("mlw").replace(",", ".")
         true_airspeed = request.form.get("true_airspeed")
         note = request.form.get("note")
 
@@ -29,6 +28,7 @@ def home():
                 aircraft_type=ac_type,
                 empty_weight=empty_weight,
                 mtow=mtow,
+                mlw=mlw,
                 true_airspeed=true_airspeed,
                 data=note,
                 user_id=current_user.id,
@@ -66,6 +66,7 @@ def update_aircraft():
     ac_type = request.form.get("ac_type")
     empty_weight = request.form.get("empty_weight").replace(",", ".")
     mtow = request.form.get("mtow").replace(",", ".")
+    mlw = request.form.get("mlw").replace(",", ".")
     true_airspeed = request.form.get("true_airspeed")
     note = request.form.get("note")
 
@@ -77,6 +78,7 @@ def update_aircraft():
         aircraft.aircraft_type = ac_type
         aircraft.empty_weight = empty_weight
         aircraft.mtow = mtow
+        aircraft.mlw = mlw
         aircraft.true_airspeed = true_airspeed
         aircraft.data = note
 

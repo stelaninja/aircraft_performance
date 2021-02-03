@@ -37,6 +37,12 @@
           <label for="mtow" class="form-label">MTOW</label>
         </div>
       </div>
+      <div class="col-sm-2">
+        <div class="form-floating">
+          <input type="text" name="mlw" id="mlw" class="form-control" placeholder="MLW" value="{{ aircraft.mlw }}" required>
+          <label for="mlw" class="form-label">MLW</label>
+        </div>
+      </div>
     </div>
     <br />
     <h6>Speeds</h6>
@@ -59,9 +65,10 @@
       </div>
     </div>
     <br />
-    <div align="center">
+    <div align="left">
+        <a href="/" class="btn btn-primary">Back</a>
         <input type="hidden" id="ac_id" name="ac_id" value="{{ aircraft.id }}"/>
-        <button type="submit" action="update-aircraft" class="btn btn-primary" aria-label="Update">
+        <button type="submit" action="update-aircraft" class="btn btn-warning" aria-label="Update">
             Update Aircraft
         </button>
         <button type="button" class="btn btn-danger" aria-label="Delete" onClick="deleteAircraft({{ aircraft.id }})">
