@@ -6,7 +6,7 @@
       <li class="list-group-item">
         <div class="container">
             <div class="row">
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                   
                 </div>
                 <div class="col-sm-1">
@@ -18,6 +18,9 @@
                 <div class="col-sm-2">
                   TYPE
                 </div>
+                <div class="col-sm-2">
+                  FUEL
+                </div>
                 <div class="col-sm">
                   NOTES
                 </div>
@@ -28,7 +31,7 @@
       <li class="list-group-item">
         <div class="container">
             <div class="row">
-                <div class="col-sm-1">
+                <div class="col-sm-2">
                   <a href="calculate?ac_id={{ aircraft.id }}" class="btn btn-primary">Calculate</a>
                 </div>
                 <div class="col-sm-1">
@@ -39,6 +42,9 @@
                 </div>
                 <div class="col-sm-2">
                   {{ aircraft.aircraft_type }}
+                </div>
+                <div class="col-sm-2">
+                  {{ aircraft.fuel_type.upper() }}
                 </div>
                 <div class="col-sm">
                     {{ aircraft.data }}
@@ -63,73 +69,7 @@
     <br />
     <br />
 
-    <h1 align="left">Add new aircraft</h1>
-
-
-
-    <form method="POST">
-      <br/>
-      <h6>Aircraft</h6>
-      <div class="row">
-        <div class="col-sm-2">
-          <div class="form-floating">
-            <input type="text" name="ac_reg" id="ac_reg" class="form-control" placeholder="Registration" required>
-            <label for="ac_reg">Registration</label>
-           </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-floating">
-            <input name="ac_type" id="ac_type" class="form-control" placeholder="Aircraft Type">
-            <label for="ac_type" class="form-label">Aircraft Type</label>
-          </div>
-        </div>
-      </div>
-      <br />
-      <h6>Weights</h6>
-      <div class="row">
-        <div class="col-sm-2">
-          <div class="form-floating">
-            <input type="text" name="empty_weight" id="empty_weight" class="form-control" placeholder="Empty Weight" required>
-            <label for="empty_weight">Empty Weight</label>
-           </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-floating">
-            <input type="text" name="mtow" id="mtow" class="form-control" placeholder="Maximum Take Off Weight" required>
-            <label for="mtow" class="form-label">MTOW</label>
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="form-floating">
-            <input type="text" name="mlw" id="mlw" class="form-control" placeholder="Maximum Landing Weight" required>
-            <label for="mlw" class="form-label">MLW</label>
-          </div>
-        </div>
-      </div>
-        <br />
-        <h6>Speeds</h6>
-        <div class="row">
-        <div class="col-sm-2">
-          <div class="form-floating">
-            <input type="text" name="true_airspeed" id="true_airspeed" class="form-control" placeholder="True Airspeed">
-            <label for="true_airspeed" class="form-label">True Airspeed</label>
-          </div>
-        </div>
-      </div>
-      <br />
-      <h6>Additional Data</h6>
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="form-floating">
-            <textarea type="text" name="note" id="note" class="form-control" placeholder="Aircraft Notes"></textarea>
-            <label for="note">Aircraft Notes</label>
-          </div>
-        </div>
-      </div>
-      <br />
-      <div align="left">
-        <button type="submit" class="btn btn-primary">Add Aircraft</button>
-      </div>
-    </form>
+    <a href="{{ url_for("views.add_aircraft") }}" type="button" class="btn btn-primary" aria-label="Add aircraft">Add Aircraft</a>
+    
 
     {% endblock %}

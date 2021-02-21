@@ -13,6 +13,10 @@ class Aircraft(db.Model):
     empty_weight = db.Column(db.Float)
     mtow = db.Column(db.Float)
     mlw = db.Column(db.Float)
+    max_fuel = db.Column(db.Float)
+    fuel_type = db.Column(db.Integer)  # 0 for Jet A1, 1 for Avgas
+    envelope = db.Column(db.String(1000))
+    loading_points = db.Column(db.String(1000))
 
     # speeds
     true_airspeed = db.Column(db.Integer)

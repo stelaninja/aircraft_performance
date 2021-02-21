@@ -8,4 +8,10 @@ Calculate
 
 <h6>Aircraft: {{ aircraft.registration }}</h6>
 
+
+
+<div class="container">
+    <img src="{{ url_for("views.plot", ac_id=aircraft.id) }}" class="img-fluid" alt="weight and balance plot">
+</div>
+
 {% endblock %}

@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<h1 align="left">Add new aircraft</h1>   
+    <form method="POST">
+      <br/>
+      <h6>Aircraft</h6>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            
+            {{ form.ac_reg(class="form-control", type="text", id="ac_reg", placeholder="{}") }}
+            <label for="ac_reg" class="form-label">{{ form.ac_reg.label }}</label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-floating">
+            {{ form.ac_type(class="form-control", type="text", id="ac_type", placeholder="{}") }}
+            <label for="ac_type" class="form-label">{{ form.ac_type.label }}</label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h6>Weights</h6>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            
+            {{ form.empty_weight(class="form-control", type="text", id="empty_weight", placeholder="{}") }}
+            <label for="empty_weight" class="form-label">{{ form.empty_weight.label }}</label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-floating">
+            {{ form.mtow(class="form-control", type="text", id="mtow", placeholder="{}") }}
+            <label for="mtow" class="form-label">{{ form.mtow.label }}</label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="form-floating">
+            {{ form.mlw(class="form-control", type="text", id="mlw", placeholder="{}") }}
+            <label for="mlw" class="form-label">{{ form.mlw.label }}</label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h6>Fuel</h6>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            
+            {{ form.max_fuel(class="form-control", type="text", id="max_fuel", placeholder="{}") }}
+            <label for="max_fuel" class="form-label">{{ form.max_fuel.label }}</label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <!-- {{ form.fuel_type(class="btn btn-outline-secondary", type="radio", id="fuel_type_jet", autocomplete="off", checked=true) }} -->
+          <input type="radio" class="btn-check" name="fuel_type" id="fuel_type_jet" value="jet" autocomplete="off" checked>
+          <label class="btn btn-outline-secondary" for="fuel_type_jet">Jet A1</label>
+
+          <input type="radio" class="btn-check" name="fuel_type" id="fuel_type_avgas" value="avgas" autocomplete="off">
+          <label class="btn btn-outline-danger" for="fuel_type_avgas">Avgas</label>
+        </div>
+      </div>
+      <br />
+      <h6>Weight and Balance</h6>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            
+            {{ form.envelope(class="form-control", type="text", id="envelope", placeholder="{}") }}
+            <label for="envelope" class="form-label">{{ form.envelope.label }}</label>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-floating">
+            
+            {{ form.loading_points(class="form-control", type="text", id="loading_points", placeholder="{}") }}
+            <label for="loading_points" class="form-label">{{ form.loading_points.label }}</label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h6>Speeds</h6>
+      <div class="row">
+        <div class="col-sm-2">
+          <div class="form-floating">
+            
+            {{ form.true_airspeed(class="form-control", type="text", id="true_airspeed", placeholder="{}") }}
+            <label for="true_airspeed" class="form-label">{{ form.true_airspeed.label }}</label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <h6>Additional Data</h6>
+      <div class="row">
+        <div class="col-sm-8">
+          <div class="form-floating">
+            
+            {{ form.note(class="form-control", type="text", id="note", placeholder="{}") }}
+            <label for="note" class="form-label">{{ form.data.label }}</label>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div align="left">
+        <a href="{{ url_for("views.home") }}" class="btn btn-primary">Back</a>
+        <button type="submit" class="btn btn-primary">Add Aircraft</button>
+      </div>
+    </form>
+
+{% endblock %}

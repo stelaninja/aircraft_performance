@@ -12,6 +12,7 @@ def create_app():
     app = Flask(__name__)
     app.config["SECRET_KEY"] = SECRET_KEY
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
     db.init_app(app)
 
     from .views import views

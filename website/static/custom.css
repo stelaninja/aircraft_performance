@@ -1,0 +1,13 @@
+/* .navbar.navbar-light {
+  background-color: skyblue;
+}
+.navbar.bg-light {
+  color: white;
+} */
+.navbar {
+  font-weight: bold;
+}
+
+.btn {
+  font-size: 12px;
+}
