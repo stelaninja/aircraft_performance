@@ -2,7 +2,8 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from os import path
 from flask_login import LoginManager
-from .secret_key import SECRET_KEY
+
+# from .secret_key import SECRET_KEY
 import os
 
 db = SQLAlchemy()
