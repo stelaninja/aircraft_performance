@@ -13,6 +13,7 @@ def create_app():
     app.config["SECRET_KEY"] = SECRET_KEY
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
     from .views import views

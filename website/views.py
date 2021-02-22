@@ -25,7 +25,6 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     form = AircraftForm()
-
     return render_template("home.html", user=current_user, form=form)
 
 

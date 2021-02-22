@@ -186,24 +186,34 @@ def plot_envelope(aircraft):
         text_str.append("Aircraft CG outside envelope limits")
     else:
         cg_outside_limit = False
-    if aircraft.LAW > aircraft.mlw:
-        exceed_land_weight = True
-        text_str.append("Max landing weight exceeded")
-    else:
-        exceed_land_weight = False
     if aircraft.TOW > aircraft.mtow:
         overweight = True
         text_str.append("Aircraft is overloaded")
     else:
         overweight = False
+    if aircraft.LAW > aircraft.mlw:
+        exceed_land_weight = True
+        text_str.append("Max landing weight exceeded")
+    else:
+        exceed_land_weight = False
+
+    if cg_outside_limit or overweight:
+        prohibited_takeoff = True
+        text_str.append("\nTAKE OFF NOT ALLOWED")
+    else:
+        prohibited_takeoff = False
 
     # if not cg_to.within(poly) or not cg_l.within(poly) or aircraft.LAW > aircraft.mlw:
     if exceed_land_weight or cg_outside_limit or overweight:
 
-        textstr = "\n".join(text_str).upper() + "\n\nTAKE OFF NOT ALLOWED"
+        textstr = "\n".join(text_str).upper()
 
         # these are matplotlib.patch.Patch properties
-        props = dict(boxstyle="round", facecolor="red", alpha=0.5)
+        if prohibited_takeoff:
+            facecolor = "red"
+        else:
+            facecolor = "orange"
+        props = dict(boxstyle="round", facecolor=facecolor, alpha=0.5)
 
         # place a text box in upper left in axes coords
         ax.text(
