@@ -7,27 +7,27 @@
       <li class="list-group-item">
         <div class="container">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   
                 </div>
                 <div class="col-sm-1">
                   ID
                 </div>
                 {% if user.id == 1 %}
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   OWNER
                 </div>
                 {% endif %}
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   REG
                 </div>
                 <div class="col-sm-2">
                   TYPE
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   FUEL
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-3">
                   NOTES
                 </div>
             </div>
@@ -37,46 +37,44 @@
       <li class="list-group-item">
         <div class="container">
             <div class="row">
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   <a href="{{ url_for("views.load_aircraft", ac_id=aircraft.id) }}" class="btn btn-primary">Calculate</a>
                 </div>
                 <div class="col-sm-1">
                     {{ aircraft.id }}
                 </div>
                 {% if user.id == 1 %}
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   {{ aircraft.user_id }}
                 </div>
                 {% endif %}
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   {{ aircraft.registration }}
                 </div>
                 <div class="col-sm-2">
                   {{ aircraft.aircraft_type }}
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-1">
                   {{ aircraft.fuel_type.upper() }}
                 </div>
-                <div class="col-sm">
+                <div class="col-sm-3">
                     {{ aircraft.data }}
                 </div>
                 <div class="col-sm" align="right">
+                  {% if aircraft.user_id == user.id %}
                     <form method="POST" action="edit-aircraft">
-                      {% if aircraft.user_id == user.id %}
                       <input type="hidden" id="ac_id" name="ac_id" value="{{ aircraft.id }}"/>
                       <button type="submit" action="edit-aircraft" class="btn btn-warning" aria-label="Edit">
                         Edit
                       </button>
-                      
-                    
-                    <button type="button" class="btn btn-danger" aria-label="Delete" onClick="deleteAircraft({{ aircraft.id }})">
-                      Delete
-                    </button>
-                    {% else %}
-                    {% endif %}
-
-                  </form>
+                      <button type="button" class="btn btn-danger" aria-label="Delete" onClick="deleteAircraft({{ aircraft.id }})">
+                        Delete
+                      </button>
+                    </form>
+                  {% else %}
+                  {% endif %}
                 </div>
+                
             </div>
         </div>
       </li>
