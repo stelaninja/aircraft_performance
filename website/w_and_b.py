@@ -33,7 +33,7 @@ class AircraftModel:
         self.loading_points = loading_points
         self.fuel_weight = 0
 
-        if self.fuel_type == 0:
+        if self.fuel_type == 0 or self.fuel_type == "jet":
             self.fuelcoeff = 0.8
         else:
             self.fuelcoeff = 0.72
@@ -108,7 +108,7 @@ def plot_envelope(aircraft):
     pathpatch = PathPatch(path, facecolor="None", edgecolor="darkgrey", linewidth=4)
 
     # create figure and subplot
-    fig, ax = plt.subplots(figsize=(12, 8))
+    fig, ax = plt.subplots(figsize=(12, 12))
 
     # plot CG change from takeoff to landing
     sc = sns.scatterplot(
@@ -220,6 +220,23 @@ def plot_envelope(aircraft):
 
     ax.set_title("Weight and Balance", size=16)
 
+    # adjust the plot to give space for text box
+    plt.subplots_adjust(bottom=0.5)
+
+    # add text box
+    text_str = "\n".join(print_data(aircraft))
+    props = dict(boxstyle="round", facecolor="blue", alpha=0.5)
+    plt.text(
+        0.5,
+        -0.1,
+        text_str,
+        transform=ax.transAxes,
+        fontsize=14,
+        verticalalignment="top",
+        horizontalalignment="center",
+        bbox=props,
+    )
+
     plt.xlim(aircraft.min_cg - 0.5, aircraft.max_cg + 0.5)
     plt.ylim(aircraft.empty_weight - 20, aircraft.mtow + 20)
 
@@ -237,25 +254,56 @@ def print_data(aircraft):
     title_str = f"{bold_div} AIRCRAFT -- {aircraft.type} {bold_div}"
     bold_div_len = int((len(title_str) / 2) - (len(aircraft.ac_reg) / 2))
 
-    print(title_str)
-    print(f"{bold_div:{bold_div_len}}{aircraft.ac_reg}{bold_div:>{bold_div_len}}")
+    info_text = []
 
-    print("Weights (kg)")
-    print(divider)
-    print(f"TOW: {aircraft.TOW:.2f}\nLAW: {aircraft.LAW:.2f}")
-    print(f"MFW: {aircraft.MFW:.2f}\nEFW: {aircraft.EFW:.2f}")
-
-    print("\nFuel")
-    print(divider)
-    print(
-        f"Fuel remaining: {aircraft.remaining_fuel} / {aircraft.max_fuel} ({round((aircraft.remaining_fuel / aircraft.max_fuel) * 100, 2)}%)"
+    info_text.append("Weights (kg)")
+    info_text.append(divider)
+    info_text.append(
+        f"Empty Weight: {aircraft.empty_weight:.2f}\nTOW: {aircraft.TOW:.2f}\nLAW: {aircraft.LAW:.2f}\nMFW: {aircraft.MFW:.2f}\nEFW: {aircraft.EFW:.2f}"
     )
-    print(f"Fuel weight: {aircraft.fuel_weight} kg")
-    print(f"Fuel burn: {aircraft.TOW - aircraft.LAW} kg")
+    info_text.append("\nFuel")
+    info_text.append(divider)
+    info_text.append(
+        f"Fuel weight (Take off): {aircraft.fuel_weight + aircraft.TOW - aircraft.LAW:.2f} kg"
+    )
+    info_text.append(f"Fuel weight (Landing): {aircraft.fuel_weight:.2f} kg")
+    info_text.append(f"Fuel burn: {aircraft.TOW - aircraft.LAW:.2f} kg")
+    info_text.append(
+        f"Fuel remaining: {aircraft.remaining_fuel:.2f} / {aircraft.max_fuel:.2f} ({round((aircraft.remaining_fuel / aircraft.max_fuel) * 100, 2)}%)"
+    )
+    info_text.append("\nBalance")
+    info_text.append(divider)
+    info_text.append(
+        f"CG at takeoff: {aircraft.CG_takeoff:.2f}\nCG at landing: {aircraft.CG_land:.2f}"
+    )
 
-    print("\nBalance")
-    print(divider)
-    print(f"CG at takeoff: {aircraft.CG_takeoff}\nCG at landing: {aircraft.CG_land}")
+    # print(title_str)
+    # print(f"{bold_div:{bold_div_len}}{aircraft.ac_reg}{bold_div:>{bold_div_len}}")
+
+    # print("Weights (kg)")
+    # print(divider)
+    # print(f"Empty Weight: {aircraft.empty_weight:.2f}")
+    # print(f"TOW: {aircraft.TOW:.2f}\nLAW: {aircraft.LAW:.2f}")
+    # print(f"MFW: {aircraft.MFW:.2f}\nEFW: {aircraft.EFW:.2f}")
+
+    # print("\nFuel")
+    # print(divider)
+    # print(
+    #     f"Fuel remaining: {aircraft.remaining_fuel:.2f} / {aircraft.max_fuel:.2f} ({round((aircraft.remaining_fuel / aircraft.max_fuel) * 100, 2)}%)"
+    # )
+    # print(
+    #     f"Fuel weight (Take off): {aircraft.fuel_weight + aircraft.TOW - aircraft.LAW:.2f} kg"
+    # )
+    # print(f"Fuel weight (Landing): {aircraft.fuel_weight:.2f} kg")
+    # print(f"Fuel burn: {aircraft.TOW - aircraft.LAW:.2f} kg")
+
+    # print("\nBalance")
+    # print(divider)
+    # print(
+    #     f"CG at takeoff: {aircraft.CG_takeoff:.2f}\nCG at landing: {aircraft.CG_land:.2f}"
+    # )
+
+    return info_text
 
 
 if __name__ == "__main__":

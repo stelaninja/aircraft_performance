@@ -11,7 +11,7 @@ Calculate
 
 
 <div class="container">
-    <img src="{{ url_for("views.plot", ac_id=aircraft.id) }}" class="img-fluid" alt="weight and balance plot">
+    <img src="{{ url_for("views.plot", ac_id=aircraft.id, load_scheme=load_scheme, fuel=fuel, fuel_burn=fuel_burn) }}" class="img-fluid" alt="weight and balance plot">
 </div>
 
 {% endblock %}

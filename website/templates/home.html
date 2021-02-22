@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-2">
-                  <a href="calculate?ac_id={{ aircraft.id }}" class="btn btn-primary">Calculate</a>
+                  <a href="{{ url_for("views.load_aircraft", ac_id=aircraft.id) }}" class="btn btn-primary">Calculate</a>
                 </div>
                 <div class="col-sm-1">
                     {{ aircraft.id }}

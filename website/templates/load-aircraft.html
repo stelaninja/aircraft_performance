@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<h1 align="left">Load aircraft</h1>
+
+
+<form method="POST" action="calculate">
+    {% for lp in loading_points %}
+    {% if not lp == "empty_weight" %}
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-floating">
+                    <input type="text" class="form-control" name="{{ lp }}" id="{{ lp }}" placeholder="{{ lp }}">
+                    <label for="{{ lp }}" class="form-label">{{ lp.replace("_", " ").capitalize() }}</label>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% endfor %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-floating">
+                <input type="text" class="form-control" name="fuel_burn" id="fuel_burn" placeholder="Fuel Burn">
+                <label for="fuel_burn" class="form-label">Expected Fuel Burn</label>
+            </div>
+        </div>
+    </div>
+
+<div class="col-sm-2">
+    <a href="{{ url_for("views.home") }}" class="btn btn-primary">Back</a>
+    <input type="hidden" id="ac_id" name="ac_id" value="{{ aircraft.id }}"/>
+    <button type="submit" action="calculate" class="btn btn-primary" aria-label="Calculate">
+        Calculate
+    </button>
+    <!-- <a href="{{url_for("views.calculate", ac_id=aircraft.id, load_scheme="") }}" class="btn btn-primary">Calculate</a> -->
+</div>
+</form>
+
+{% endblock %}

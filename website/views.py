@@ -32,6 +32,11 @@ def home():
 @views.route("/plot")
 def plot():
     ac_id = request.args.get("ac_id")
+    load_scheme = ast.literal_eval(request.args.get("load_scheme"))
+    fuel = float(request.args.get("fuel"))
+    fuel_burn = float(request.args.get("fuel_burn"))
+    print("LOAD SCHEME FOR PLOT IS TYPE:", type(load_scheme))
+    print(load_scheme)
     aircraft = Aircraft.query.filter_by(id=ac_id).first()
     print("AIRCRAFT ID:", ac_id)
     print(list(ast.literal_eval(aircraft.envelope)))
@@ -48,17 +53,7 @@ def plot():
     )
 
     ac_model.load_aircraft(
-        weights={
-            "pilot": 90,
-            "front_pax": 80,
-            "rear_pax1": 0,
-            "rear_pax2": 0,
-            "std_bagg": 10,
-            "fwd_ext_bagg": 0,
-            "aft_ext_bagg": 0,
-        },
-        fuel_ltr=100,
-        fuel_burn=50,
+        weights=load_scheme, fuel_ltr=fuel, fuel_burn=fuel_burn,
     )
 
     wandb.print_data(ac_model)
@@ -66,6 +61,7 @@ def plot():
     # save the fig to the image
 
     fig = wandb.plot_envelope(ac_model)
+    plt.text(90, 900, "TEST")
     # create canvas and image
     canvas = FigureCanvas(fig)
     img = io.BytesIO()
@@ -74,20 +70,51 @@ def plot():
     return send_file(img, mimetype="img/png", cache_timeout=0)
 
 
-@views.route("/calculate")
+@views.route("/calculate", methods=["GET", "POST"])
+@login_required
 def calculate():
-    ac_id = request.args.get("ac_id")
+    load_scheme = {}
+    if request.method == "POST":
+        ac_id = request.form.get("ac_id")
+        fuel = request.form.get("fuel")
+        fuel_burn = request.form.get("fuel_burn")
+
+        print("LOAD SCHEME")
+        form_data = request.form
+        for key in form_data.keys():
+            for value in form_data.getlist(key):
+                if key not in ["ac_id", "fuel", "fuel_burn"]:
+                    if value == "":
+                        value = 0
+                    load_scheme[key] = float(value)
+                print(key, ":", value)
+    else:
+        ac_id = request.args.get("ac_id")
     aircraft = Aircraft.query.filter_by(id=ac_id).first()
 
-    return render_template("calculate.html", aircraft=aircraft, user=current_user)
+    return render_template(
+        "calculate.html",
+        aircraft=aircraft,
+        user=current_user,
+        load_scheme=load_scheme,
+        fuel=fuel,
+        fuel_burn=fuel_burn,
+    )
 
 
 @views.route("/load-aircraft")
+@login_required
 def load_aircraft():
     ac_id = request.args.get("ac_id")
     aircraft = Aircraft.query.filter_by(id=ac_id).first()
+    loading_points = ast.literal_eval(aircraft.loading_points)
 
-    return render_template("load-aicraft.html", aircraft=aircraft)
+    return render_template(
+        "load-aircraft.html",
+        aircraft=aircraft,
+        loading_points=loading_points,
+        user=current_user,
+    )
 
 
 @views.route("/edit-aircraft", methods=["GET", "POST"])
