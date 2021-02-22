@@ -6,7 +6,7 @@ from flask_login import LoginManager
 # from .secret_key import SECRET_KEY
 import os
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 DB_NAME = "aircraft_database.db"
 
 
