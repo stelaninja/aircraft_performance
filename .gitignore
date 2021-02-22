@@ -3,3 +3,4 @@ secret_key.py
 aircraft_database.db
 .vscode
 __pycache__
+website/__pycache__
