@@ -1,3 +1,4 @@
 secret_key.py
 aircraft_database.db
-venv
+.vscode
+__pycache__
