@@ -9,7 +9,7 @@ from flask import (
     url_for,
 )
 from flask_login import login_required, current_user
-from .models import Aircraft
+from .models import Aircraft, User
 from .forms import AircraftForm
 from . import w_and_b as wandb
 from . import db
@@ -26,8 +26,14 @@ views = Blueprint("views", __name__)
 def home():
     form = AircraftForm()
     aircrafts = Aircraft.query.all()
+    all_users = User.query.all()
+
     return render_template(
-        "home.html", aircrafts=aircrafts, user=current_user, form=form
+        "home.html",
+        aircrafts=aircrafts,
+        user=current_user,
+        form=form,
+        all_users=all_users,
     )
 
 
@@ -53,9 +59,11 @@ def plot():
         envelope=list(ast.literal_eval(aircraft.envelope)),
         loading_points=ast.literal_eval(aircraft.loading_points),
     )
-
+    load_scheme2 = load_scheme.copy()
+    for key in ["ac_id", "fuel", "fuel_burn"]:
+        del load_scheme2[key]
     ac_model.load_aircraft(
-        weights=load_scheme, fuel_ltr=fuel, fuel_burn=fuel_burn,
+        weights=load_scheme2, fuel_ltr=fuel, fuel_burn=fuel_burn,
     )
 
     wandb.print_data(ac_model)
@@ -80,27 +88,33 @@ def calculate():
         ac_id = request.form.get("ac_id")
         fuel = request.form.get("fuel")
         fuel_burn = request.form.get("fuel_burn")
+        will_plot = True
 
         print("LOAD SCHEME")
         form_data = request.form
         for key in form_data.keys():
             for value in form_data.getlist(key):
-                if key not in ["ac_id", "fuel", "fuel_burn"]:
-                    if value == "":
-                        value = 0
-                    load_scheme[key] = float(value)
+                # if key not in ["ac_id", "fuel", "fuel_burn"]:
+                if value == "":
+                    value = 0
+                load_scheme[key] = float(value)
                 print(key, ":", value)
     else:
         ac_id = request.args.get("ac_id")
+        will_plot = False
+
     aircraft = Aircraft.query.filter_by(id=ac_id).first()
+    loading_points = ast.literal_eval(aircraft.loading_points)
 
     return render_template(
-        "calculate.html",
+        "load-aircraft.html",
         aircraft=aircraft,
         user=current_user,
         load_scheme=load_scheme,
+        loading_points=loading_points,
         fuel=fuel,
         fuel_burn=fuel_burn,
+        will_plot=will_plot,
     )
 
 
@@ -110,12 +124,14 @@ def load_aircraft():
     ac_id = request.args.get("ac_id")
     aircraft = Aircraft.query.filter_by(id=ac_id).first()
     loading_points = ast.literal_eval(aircraft.loading_points)
+    load_scheme = {}
 
     return render_template(
         "load-aircraft.html",
         aircraft=aircraft,
         loading_points=loading_points,
         user=current_user,
+        load_scheme=load_scheme,
     )
 
 
@@ -149,8 +165,15 @@ def update_aircraft():
     true_airspeed = request.form.get("true_airspeed")
     note = request.form.get("note")
 
-    print(ac_reg, fuel_type)
-    if len(ac_reg) < 3:
+    owned_aircrafts = [x.id for x in current_user.aircrafts]
+
+    if int(ac_id) not in owned_aircrafts:
+        flash(
+            "You do not own this aircraft and is not allowed to update.",
+            category="error",
+        )
+        aircraft = None
+    elif len(ac_reg) < 3:
         flash("Aircraft registration is to short.", category="error")
     else:
         aircraft = db.session.query(Aircraft).filter(Aircraft.id == ac_id).one()
@@ -170,7 +193,7 @@ def update_aircraft():
         flash("Aircraft updated!", category="success")
 
         aircraft = Aircraft.query.filter_by(id=ac_id).first()
-        form = AircraftForm()
+    form = AircraftForm()
 
     return render_template(
         "edit_aircraft.html", aircraft=aircraft, form=form, user=current_user

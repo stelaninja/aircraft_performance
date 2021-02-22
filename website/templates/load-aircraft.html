@@ -6,12 +6,14 @@
 
 
 <form method="POST" action="calculate">
+    
     {% for lp in loading_points %}
+    
     {% if not lp == "empty_weight" %}
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-floating">
-                    <input type="text" class="form-control" name="{{ lp }}" id="{{ lp }}" placeholder="{{ lp }}">
+                    <input type="text" class="form-control" name="{{ lp }}" id="{{ lp }}" placeholder="{{ lp }}" value="{{ load_scheme[lp] }}">
                     <label for="{{ lp }}" class="form-label">{{ lp.replace("_", " ").capitalize() }}</label>
                 </div>
             </div>
@@ -21,7 +23,7 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="form-floating">
-                <input type="text" class="form-control" name="fuel_burn" id="fuel_burn" placeholder="Fuel Burn">
+                <input type="text" class="form-control" name="fuel_burn" id="fuel_burn" placeholder="Fuel Burn" value="{{ fuel_burn }}">
                 <label for="fuel_burn" class="form-label">Expected Fuel Burn</label>
             </div>
         </div>
@@ -36,5 +38,10 @@
     <!-- <a href="{{url_for("views.calculate", ac_id=aircraft.id, load_scheme="") }}" class="btn btn-primary">Calculate</a> -->
 </div>
 </form>
-
+{% if will_plot == True %}
+    <div class="container">
+        <img src="{{ url_for("views.plot", ac_id=aircraft.id, load_scheme=load_scheme, fuel=fuel, fuel_burn=fuel_burn) }}" class="img-fluid" alt="weight and balance plot">
+    </div>
+{% else %}
+{% endif %}
 {% endblock %}
