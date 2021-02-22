@@ -25,7 +25,10 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     form = AircraftForm()
-    return render_template("home.html", user=current_user, form=form)
+    aircrafts = Aircraft.query.all()
+    return render_template(
+        "home.html", aircrafts=aircrafts, user=current_user, form=form
+    )
 
 
 @views.route("/plot")
