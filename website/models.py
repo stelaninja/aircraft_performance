@@ -14,7 +14,7 @@ class Aircraft(db.Model):
     mtow = db.Column(db.Float)
     mlw = db.Column(db.Float)
     max_fuel = db.Column(db.Float)
-    fuel_type = db.Column(db.Integer)  # 0 for Jet A1, 1 for Avgas
+    fuel_type = db.Column(db.String(10))
     envelope = db.Column(db.String(1000))
     loading_points = db.Column(db.String(1000))
 
