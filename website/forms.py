@@ -11,6 +11,8 @@ class AircraftForm(FlaskForm):
     max_fuel = FloatField(label="Max Fuel (l)")
     fuel_type = RadioField(label="Fuel Type")
     envelope = StringField(label="Envelope")
-    loading_points = StringField(label="Loading Points")
+    loading_points = StringField(
+        label="Loading Points"
+    )  # , render_kw={"disabled": ""})
     true_airspeed = FloatField(label="True Airspeed")
     note = StringField(label="Aircraft Notes")

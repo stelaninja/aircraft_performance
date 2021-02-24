@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Users{% endblock %}
+{% block content %}
+
+{% if user.id == 1 %}
+    <h1 align="left">Users</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NAME</th>
+                <th scope="col">E-MAIL</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user_it in all_users %}
+            <tr>
+                <th scope="row">{{ user_it.id }}</th>
+                <td>{{ user_it.first_name }} {{ user_it.last_name }}</td>
+                <td>{{ user_it.email }}</td>
+                <td>
+                    <button type="button" class="btn btn-danger pull-right" aria-label="Delete" onClick="deleteUser({{ user_it.id }})">
+                        Delete
+                      </button>
+                </td>
+            </tr>
+            {% endfor%}
+        </tbody>
+    </table>
+            
+{% else %}
+{% endif %}
+
+{% endblock %}

@@ -26,14 +26,9 @@ views = Blueprint("views", __name__)
 def home():
     form = AircraftForm()
     aircrafts = Aircraft.query.all()
-    all_users = User.query.all()
 
     return render_template(
-        "home.html",
-        aircrafts=aircrafts,
-        user=current_user,
-        form=form,
-        all_users=all_users,
+        "home.html", aircrafts=aircrafts, user=current_user, form=form,
     )
 
 
@@ -244,6 +239,18 @@ def add_aircraft():
     return render_template("add_aircraft.html", form=form, user=current_user)
 
 
+@views.route("/aircraft-data/<ID>")
+def aircraft_data(ID):
+    aircraft = Aircraft.query.filter_by(id=ID).first()
+    aircraft_dict = {}
+
+    aircraft_dict["loading_points"] = ast.literal_eval(aircraft.loading_points)
+    response = jsonify({"aircraft": aircraft_dict})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+
+    return response
+
+
 @views.route("/delete-aircraft", methods=["POST"])
 def delete_aircraft():
     aircraft = json.loads(request.data)
@@ -255,3 +262,29 @@ def delete_aircraft():
             db.session.commit()
 
     return jsonify({})
+
+
+@views.route("/delete-user", methods=["POST"])
+def delete_user():
+
+    user = json.loads(request.data)
+    userId = user["userId"]
+    user_to_delete = User.query.get(userId)
+    print(user_to_delete)
+    if user_to_delete:
+        if user_to_delete.id == current_user.id:
+            flash("You cannot delete your self at this moment!", category="error")
+        else:
+            db.session.delete(user_to_delete)
+            db.session.commit()
+            flash(f"User {user_to_delete.id} is removed", category="success")
+
+    return jsonify({})
+
+
+@login_required
+@views.route("/users")
+def users():
+    all_users = User.query.all()
+
+    return render_template("users.html", user=current_user, all_users=all_users)
