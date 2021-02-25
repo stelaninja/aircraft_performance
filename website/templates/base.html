@@ -35,7 +35,10 @@
           {% if user.id == 1 %}
             <a class="nav-item nav-link" id="users" href="{{ url_for("views.users") }}">Users</a>
           {% endif %}
+        </div>
+        <div class="navbar-nav ms-auto">
           <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+          <a class="nav-item nav-link" id="profile" href="{{ url_for("user_views.profile")}}">{{ user.first_name }}</a>
           {% else %}
           <a class="nav-item nav-link" id="login" href="/login">Login</a>
           <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>

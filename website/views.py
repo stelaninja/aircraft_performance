@@ -25,7 +25,7 @@ views = Blueprint("views", __name__)
 @login_required
 def home():
     form = AircraftForm()
-    aircrafts = Aircraft.query.all()
+    aircrafts = Aircraft.query.order_by(Aircraft.id).all()
 
     return render_template(
         "home.html", aircrafts=aircrafts, user=current_user, form=form,
@@ -285,6 +285,6 @@ def delete_user():
 @login_required
 @views.route("/users")
 def users():
-    all_users = User.query.all()
+    all_users = User.query.order_by(User.id).all()
 
     return render_template("users.html", user=current_user, all_users=all_users)
