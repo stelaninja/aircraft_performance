@@ -18,6 +18,14 @@ function deleteUser(userId) {
   });
 }
 
+
+
+// Function to hide the Spinner 
+function hideSpinner() { 
+  document.getElementById('spinner') 
+          .style.display = 'none'; 
+}  
+
 // FROM :
 // https://github.com/codebasics/python_projects_grocery_webapp
 // https://www.youtube.com/watch?v=RsK70V-R2N0

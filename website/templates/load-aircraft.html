@@ -6,6 +6,7 @@
 
 
 <form method="POST" action="calculate">
+<!-- <form method="POST"> -->
     
     {% for lp in loading_points %}
     
@@ -32,16 +33,21 @@
 <div class="col-sm-2">
     <a href="{{ url_for("views.home") }}" class="btn btn-primary">Back</a>
     <input type="hidden" id="ac_id" name="ac_id" value="{{ aircraft.id }}"/>
-    <button type="submit" action="calculate" class="btn btn-primary" aria-label="Calculate">
+    <button type="submit" onclick="getImage({{ url_for("views.plot", ac_id=aircraft.id, load_scheme=load_scheme, fuel=fuel, fuel_burn=fuel_burn) }})" class="btn btn-primary" aria-label="Calculate">
         Calculate
     </button>
-    <!-- <a href="{{url_for("views.calculate", ac_id=aircraft.id, load_scheme="") }}" class="btn btn-primary">Calculate</a> -->
 </div>
 </form>
 {% if will_plot == True %}
-    <div class="container">
-        <img src="{{ url_for("views.plot", ac_id=aircraft.id, load_scheme=load_scheme, fuel=fuel, fuel_burn=fuel_burn) }}" class="img-fluid" alt="weight and balance plot">
-    </div>
-{% else %}
+
+
+<div class="d-flex justify-content-center">
+    <div class="spinner-border text-primary" 
+        id="spinner" role="status"> 
+        <span class="sr-only">Loading...</span> 
+    </div> 
+    <img src="{{ url_for("views.plot", ac_id=aircraft.id, load_scheme=load_scheme, fuel=fuel, fuel_burn=fuel_burn) }}" class="img-fluid" alt="weight and balance plot" onload="hideSpinner()">
+</div>
+
 {% endif %}
 {% endblock %}
