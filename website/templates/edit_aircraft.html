@@ -75,29 +75,46 @@
       </div>
     </div>
     <br />
+    <!-- ADD ENVELOPE BUTTONS -->
     <h6>Weight and Balance</h6>
     <div class="row">
-      <div class="col-sm-2">
+      <div class="row mb-4">
+        <div class="col-sm-3">
+          <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#envelopeModal">
+            Add Envelope Point
+          </button>
+          <button type="button" class="btn btn-sm btn-warning" onclick="clearEnvelope()">
+            Clear Envelope
+          </button>
+        </div>
+      </div>
+  </div>
+  <!-- END OF ENVELOPE BUTTONS -->
+    <div class="row">
+      <div class="col-sm-6">
         <div class="form-floating">
           
-          {{ form.envelope(class="form-control", type="text", id="envelope", value=aircraft.envelope) }}
+          {{ form.envelope(class="form-control", type="text", id="envelope", value=aircraft.envelope, readonly=readonly) }}
           <label for="envelope" class="form-label">{{ form.envelope.label }}</label>
         </div>
       </div>
     </div>
-      <!-- ADD LOAD POINT BUTTON -->
+      <!-- ADD LOAD POINT BUTTONS -->
       <br/>
       <h6>Load Points</h6>
       <div class="row">
           <div class="row mb-4">
-            <div class="col-sm-2">
+            <div class="col-sm-3">
               <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#loadpointModal">
                 Edit Load Point
+              </button>
+              <button type="button" class="btn btn-sm btn-warning" onclick="clearLoadpoints()">
+                Clear Loading Points
               </button>
             </div>
           </div>
       </div>
-      <!-- END OF LOAD POINT BUTTON -->
+      <!-- END OF LOAD POINT BUTTONS -->
       <div class="col-sm-6">
         <div class="form-floating">
       
@@ -107,7 +124,7 @@
       </div>
 
     <br />
-    <h6>Speeds</h6>
+    <h6>Speed</h6>
     <div class="row">
       <div class="col-sm-2">
         <div class="form-floating">
@@ -140,7 +157,57 @@
       </button>
   </div>
 </form>
-<!-- THE MODAL DIALOG -->
+
+<!-- THE ENVELOPE MODAL DIALOG -->
+
+<div class="modal fade-scale" id="envelopeModal" role="dialog" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title">Add Envelope Points</h4>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="envelopeForm" name="envelopeForm">
+                  <input type="hidden" name="id" id="id" value="0">
+                  <div class="row">
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <label >Weight Limit</label>
+                              <input class="form-control" placeholder="Weight" name="weight" id="weight" type="text" value="">
+                          </div>
+                      </div>
+                      <div class="col-sm-12">
+                          <div class="form-group">
+                              <label >CG Distance from datum</label>
+                              <input class="form-control" placeholder="CG Distance" name="cg_envelope" id="cg_envelope" type="text" value="">
+                          </div>
+                      </div>
+                  </div>
+              </form>
+              <br />
+              <div class="container">
+                <div class="row justify-content-md-center text-center">
+                  <div class="col md-auto bg-light">
+                    Values are needed for at least 4 points<br/>
+                    added in clockwise or counter clockwise order.
+                  </div>
+                </div>
+              </div>
+
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="saveEnvelope">Save</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- END OF ENVELOPE MODAL DIALOG -->
+
+
+<!-- THE LOAD POINT MODAL DIALOG -->
 
 <div class="modal fade-scale" id="loadpointModal" role="dialog" data-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -194,5 +261,5 @@
   </div>
 </div>
 
-<!-- END OF MODAL DIALOG -->
+<!-- END OF LOAD POINT MODAL DIALOG -->
 {% endblock %}

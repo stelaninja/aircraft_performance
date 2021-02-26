@@ -60,10 +60,13 @@ var loadpointModal = $("#loadpointModal");
       var load_point_dict = {"empty_weight": 0, "pilot": 0, "fuel": 0}
     }
     if (load_point_dict.length == 0) {
-      var load_point_dict = []
+      var load_point_dict = {"empty_weight": 0, "pilot": 0, "fuel": 0}
+      // var load_point_dict = []
     };
     console.log(load_point_dict)
-    load_point_dict[lp] = parseFloat(cg);
+    if (lp != "") {
+      load_point_dict[lp] = parseFloat(cg);
+    }
 
     load_points_field.value = JSON.stringify(load_point_dict);
     console.table(load_point_dict)
@@ -106,7 +109,7 @@ $(function () {
 
   });
 
-  // Save Load Point
+  // Save Envelope
   $("#saveEnvelope").on("click", function () {
     var data = $("#envelopeForm").serializeArray();
 
