@@ -250,21 +250,21 @@ def aircraft_data(ID):
 
     return response
 
-
 @views.route("/delete-aircraft", methods=["POST"])
+@login_required
 def delete_aircraft():
     aircraft = json.loads(request.data)
     aircraftId = aircraft["aircraftId"]
     aircraft = Aircraft.query.get(aircraftId)
     if aircraft:
-        if aircraft.user_id == current_user.id:
+        if aircraft.user_id == current_user.id or current_user.id == 1:
             db.session.delete(aircraft)
             db.session.commit()
 
     return jsonify({})
 
-
 @views.route("/delete-user", methods=["POST"])
+@login_required
 def delete_user():
 
     user = json.loads(request.data)
