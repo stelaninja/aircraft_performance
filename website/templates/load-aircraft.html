@@ -15,7 +15,7 @@
             <div class="col-sm-4">
                 <div class="form-floating">
                     <input type="text" class="form-control" name="{{ lp }}" id="{{ lp }}" placeholder="{{ lp }}" value="{{ load_scheme[lp] }}">
-                    <label for="{{ lp }}" class="form-label">{{ lp.replace("_", " ").capitalize() }}</label>
+                    <label for="{{ lp }}" class="form-label">{{ lp.replace("_", " ").capitalize() }} {% if lp == "fuel" %} (l) {% endif %}</label>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <div class="col-sm-4">
             <div class="form-floating">
                 <input type="text" class="form-control" name="fuel_burn" id="fuel_burn" placeholder="Fuel Burn" value="{{ fuel_burn }}">
-                <label for="fuel_burn" class="form-label">Expected Fuel Burn</label>
+                <label for="fuel_burn" class="form-label">Expected Fuel Burn (l)</label>
             </div>
         </div>
     </div>
